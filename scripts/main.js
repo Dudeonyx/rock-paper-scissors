@@ -5,17 +5,24 @@ function computerPlay() {
   return ['paper', 'rock', 'scissors'][Math.floor(Math.random() * 3)];
 }
 // const playerResult = ['You win!, ', 'You lose!, ', 'Draw!'];
-const result = ['You win!, Paper covers Rock.', 'You win!, Rock smashes Scissors.',
-  'You win!, Scissors cut Paper.', 'You lose!, Paper covers your Rock.',
-  'You lose!, Rock smashes your Scissors.', 'You lose!, Scissors cut your Paper.', 'Draw!',
+const result = [
+  'You win!, Paper covers Rock.',
+  'You win!, Rock smashes Scissors.',
+  'You win!, Scissors cut Paper.',
+  'You lose!, Paper covers your Rock.',
+  'You lose!, Rock smashes your Scissors.',
+  'You lose!, Scissors cut your Paper.',
+  'Draw!',
 ];
 
 function increasePlayerWin() {
   playerWin = 1;
+  computerWin = 0;
 }
 
 function increaseComputerWin() {
   computerWin = 1;
+  playerWin = 0;
 }
 
 function pickWinner(playerSelection, computerSelection, i) {
@@ -44,16 +51,25 @@ function pickWinner(playerSelection, computerSelection, i) {
 }
 
 function playRound(i, playerInput) {
-  playerInput || (playerInput = prompt('Pick your choice (Paper, Scissors or Rock):'));
-  if (playerInput.toLowerCase() === 'scissor' || playerInput.toLowerCase() === 'scizzor' ||
-    playerInput.toLowerCase() === 'scizzors' || playerInput.toLowerCase() === 'sciz' ||
-    playerInput.toLowerCase() === 'scis') playerInput = 'scissors';
+  if (!playerInput) {
+    playerInput = prompt('Pick your choice (Paper, Scissors or Rock):');
+  }
+  switch (playerInput.toLowerCase()) {
+    case 'scissor':
+    case 'scizzor':
+    case 'scizzors':
+    case 'sciz':
+    case 'scis':
+      playerInput = 'scissors';
+      break;
+    default:
+      break;
+  }
   const computerSelection = computerPlay();
   const playerSelection = playerInput.toLowerCase();
   console.log(`Player picked ${playerSelection}`);
   console.log(`Computer picked ${computerSelection}`);
-  if (playerSelection !== 'rock' && playerSelection !== 'paper' &&
-    playerSelection !== 'scissors') {
+  if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') {
     increaseComputerWin();
     return alert(`Round ${i}: Invalid Selection!!!`);
   }
@@ -75,12 +91,13 @@ function game() {
     computerWin = 0;
   }
   if (totalComputerwins === totalPlayerWins) {
-    alert('Woah!!!\nit\'s a draw!!!');
+    console.log("Woah!!!\nit's a draw!!!");
+    alert("Woah!!!\nit's a draw!!!");
   } else if (totalPlayerWins > totalComputerwins) {
-    alert('You\'ve won the game!!!! \n Congratulations!!!');
-    console.log('You\'ve won the game!!!! \n Congratulations!!!');
+    alert("You've won the game!!!! \nCongratulations!!!");
+    console.log("You've won the game!!!! \nCongratulations!!!");
   } else {
-    alert('You\'ve lost the game!!! \n Better luck next time!!!');
-    console.log('You\'ve lost the game!!! \n Better luck next time!!!');
+    alert("You've lost the game!!! \nBetter luck next time!!!");
+    console.log("You've lost the game!!! \nBetter luck next time!!!");
   }
 }
