@@ -1,78 +1,61 @@
-let playerWin = 0;
-let computerWin = 0;
-
 function computerPlay() {
   return ['paper', 'rock', 'scissors'][Math.floor(Math.random() * 3)];
 }
 // const playerResult = ['You win!, ', 'You lose!, ', 'Draw!'];
-const result = [
-  'You win!, Paper covers Rock.',
-  'You win!, Rock smashes Scissors.',
-  'You win!, Scissors cut Paper.',
-  'You lose!, Paper covers your Rock.',
-  'You lose!, Rock smashes your Scissors.',
-  'You lose!, Scissors cut your Paper.',
-  'Draw!',
-];
-
-function increasePlayerWin() {
-  playerWin = 1;
-  computerWin = 0;
-}
-
-function increaseComputerWin() {
-  computerWin = 1;
-  playerWin = 0;
-}
 
 function pickWinner(playerSelection, computerSelection, i) {
+  const result = [
+    'You win!, Your Paper covers my Rock.',
+    'You win!, Your Rock smashes my Scissors.',
+    'You win!, Your Scissors cut my Paper.',
+    'You lose!, My Paper covers your Rock.',
+    'You lose!, My Rock smashes your Scissors.',
+    'You lose!, My Scissors cut your Paper.',
+    'Draw!',
+  ];
   switch (playerSelection + computerSelection) {
     case 'paperrock':
-      increasePlayerWin();
       return `Round ${i}\n${result[0]}`;
     case 'rockscissors':
-      increasePlayerWin();
       return `Round ${i}\n${result[1]}`;
     case 'scissorspaper':
-      increasePlayerWin();
       return `Round ${i}\n${result[2]}`;
     case 'rockpaper':
-      increaseComputerWin();
       return `Round ${i}\n${result[3]}`;
     case 'scissorsrock':
-      increaseComputerWin();
       return `Round ${i}\n${result[4]}`;
     case 'paperscissors':
-      increaseComputerWin();
       return `Round ${i}\n${result[5]}`;
     default:
       return `Round ${i}\n${result[6]}`;
   }
 }
 
-function playRound(i, playerInput) {
-  if (!playerInput) {
-    playerInput = prompt('Pick your choice (Paper, Scissors or Rock):');
-  }
-  switch (playerInput.toLowerCase()) {
-    case 'scissor':
-    case 'scizzor':
-    case 'scizzors':
-    case 'sciz':
-    case 'scis':
-      playerInput = 'scissors';
-      break;
-    default:
-      break;
-  }
+function playRound(playerInput, i = 1) {
   const computerSelection = computerPlay();
-  const playerSelection = playerInput.toLowerCase();
+  let playerSelection;
+  if (!playerInput) {
+    playerSelection = prompt('Pick your choice (Paper, Scissors or Rock):');
+  } else {
+    playerSelection = playerInput.toLowerCase();
+  }
+  switch (playerSelection) {
+    case /scis/i:
+    case /sciz/i:
+      playerSelection = 'scissors';
+      break;
+    case null:
+      return false;
+    default:
+      playerSelection = playerSelection.toLowerCase();
+      break;
+  }
+  if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') {
+    alert(`Round ${i}: Invalid Selection!!! \nYou picked "${playerSelection}"???`);
+    return `Round ${i}: Invalid Selection!!! \nYou picked "${playerSelection}"???`;
+  }
   console.log(`Player picked ${playerSelection}`);
   console.log(`Computer picked ${computerSelection}`);
-  if (playerSelection !== 'rock' && playerSelection !== 'paper' && playerSelection !== 'scissors') {
-    increaseComputerWin();
-    return alert(`Round ${i}: Invalid Selection!!!`);
-  }
   const roundWinner = pickWinner(playerSelection, computerSelection, i);
   alert(roundWinner);
   return roundWinner;
@@ -84,11 +67,14 @@ function game() {
   let totalComputerwins = 0;
   while (i < 5) {
     i += 1;
-    playRound(i);
-    totalPlayerWins += playerWin;
-    totalComputerwins += computerWin;
-    playerWin = 0;
-    computerWin = 0;
+    const roundWinner = playRound('', i);
+    if (!roundWinner) {
+      break;
+    } else if (/You win/i.test(roundWinner)) {
+      totalPlayerWins += 1;
+    } else if (/(You lose)|(invalid)/i.test(roundWinner)) {
+      totalComputerwins += 1;
+    }
   }
   if (totalComputerwins === totalPlayerWins) {
     console.log("Woah!!!\nit's a draw!!!");
