@@ -35,6 +35,15 @@ function validatePlayerInput(playerInput) {
 }
 
 function pickWinner(playerSelection, computerSelection, i) {
+  const result = [
+    'You win!, Your Paper covers my Rock.',
+    'You win!, Your Rock smashes my Scissors.',
+    'You win!, Your Scissors cut my Paper.',
+    'You lose!, My Paper covers your Rock.',
+    'You lose!, My Rock smashes your Scissors.',
+    'You lose!, My Scissors cut your Paper.',
+    'Draw!',
+  ];
   switch (playerSelection + computerSelection) {
     case 'paperrock':
       return `Round ${i}\nYou win!, Your Paper covers my Rock.`;
