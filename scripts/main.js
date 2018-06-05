@@ -29,12 +29,20 @@ function validatePlayerInput(playerInput) {
     case 'scis':
     case 'sciz':
     case 'scissor':
+    case 'scissr':
     case 'scizzor':
+    case 'scizzr':
     case 'scizzors':
+    case 'scizzrs':
     case 'scisors':
+    case 'scisrs':
     case 'scizors':
+    case 'scizrs':
     case 'scisor':
+    case 'scisr':
     case 'scizor':
+    case 'scizr':
+    case 's':
       validatedPlayerInput = 'scissors';
       break;
     case 'roc':
@@ -42,12 +50,15 @@ function validatePlayerInput(playerInput) {
     case 'rocc':
     case 'rck':
     case 'rokk':
+    case 'rokc':
+    case 'r':
       validatedPlayerInput = 'rock';
       break;
     case 'papr':
     case 'pape':
     case 'papar':
     case 'pap':
+    case 'p':
       validatedPlayerInput = 'paper';
       break;
     default:
@@ -111,8 +122,8 @@ function game() {
     }
   }
   if (totalComputerwins === totalPlayerWins) {
-    console.log('Woah!!!\nit\'s a draw!!!');
-    alert(`Woah!!! \n Player score: ${totalPlayerWins} ==== Comp score: ${totalComputerwins} \nit's a draw!!!`);
+    console.log("Woah!!!\nit's a draw!!!");
+    alert(`Woah!!! \n Player score: ${totalPlayerWins} ---- Comp score: ${totalComputerwins} \nit's a draw!!!`);
   } else if (totalPlayerWins > totalComputerwins) {
     alert(`You've won the game!!!!\n Player score: ${totalPlayerWins} ---- Comp score: ${totalComputerwins} \nCongratulations!!!`);
     console.log("You've won the game!!!! \nCongratulations!!!");
