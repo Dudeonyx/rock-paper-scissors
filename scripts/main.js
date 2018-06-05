@@ -1,5 +1,18 @@
 function computerPlay() {
-  const computerOptions = ['paper', 'rock', 'scissors', 'rock', 'scissors', 'paper', 'scissors', 'paper', 'rock', 'paper', 'scissors', 'rock'];
+  const computerOptions = [
+    'paper',
+    'rock',
+    'scissors',
+    'rock',
+    'scissors',
+    'paper',
+    'scissors',
+    'paper',
+    'rock',
+    'paper',
+    'scissors',
+    'rock',
+  ];
   return computerOptions[Math.floor(Math.random() * computerOptions.length)];
 }
 
@@ -10,7 +23,7 @@ function validatePlayerInput(playerInput) {
   } else {
     validatedPlayerInput = playerInput.toLowerCase();
   }
-  if (validatedPlayerInput === null) return false;
+  if (validatedPlayerInput === null) return 'Quit game';
   validatedPlayerInput = validatedPlayerInput.toLowerCase();
   switch (validatedPlayerInput) {
     case 'scis':
@@ -65,8 +78,8 @@ function pickWinner(playerSelection, computerSelection, i) {
 function playRound(i = 1, playerInput) {
   const computerSelection = computerPlay();
   const playerSelection = validatePlayerInput(playerInput);
-  if (playerSelection === false) {
-    return playerSelection;
+  if (playerSelection === 'Quit game') {
+    return 'Quit game';
   } else if (
     playerSelection !== 'rock' &&
     playerSelection !== 'paper' &&
@@ -89,7 +102,7 @@ function game() {
   while (i < 5) {
     i += 1;
     const roundWinner = playRound(i);
-    if (!roundWinner) {
+    if (roundWinner === 'Quit game') {
       break;
     } else if (/You win/i.test(roundWinner)) {
       totalPlayerWins += 1;
@@ -98,13 +111,13 @@ function game() {
     }
   }
   if (totalComputerwins === totalPlayerWins) {
-    console.log("Woah!!! \nit's a draw!!!");
-    alert("Woah!!! \nit's a draw!!!");
+    console.log('Woah!!!\nit\'s a draw!!!');
+    alert(`Woah!!! \n Player score: ${totalPlayerWins} ==== Comp score: ${totalComputerwins} \nit's a draw!!!`);
   } else if (totalPlayerWins > totalComputerwins) {
-    alert("You've won the game!!!! \nCongratulations!!!");
+    alert(`You've won the game!!!!\n Player score: ${totalPlayerWins} ---- Comp score: ${totalComputerwins} \nCongratulations!!!`);
     console.log("You've won the game!!!! \nCongratulations!!!");
   } else {
-    alert("You've lost the game!!! \nBetter luck next time!!!");
+    alert(`You've lost the game!!!\n Comp score: ${totalComputerwins} ---- Player score: ${totalPlayerWins} \nBetter luck next time!!!`);
     console.log("You've lost the game!!! \nBetter luck next time!!!");
   }
 }
